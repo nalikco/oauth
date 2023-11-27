@@ -56,4 +56,4 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('clients', ClientController::class)
-    ->middleware('admin');
+    ->middleware(['auth', 'admin']);

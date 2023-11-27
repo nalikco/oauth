@@ -17,13 +17,31 @@ class ClientRepositoryTest extends TestCase
 {
     use RefreshDatabase;
 
+    /**
+     * Test the "getWithPaginate" method of the ClientRepository class.
+     */
     public function test_get_with_paginate(): void
     {
+        // Instantiate the client repository
+        $repository = $this->app->make(ClientRepository::class);
 
+        // Create a new client
+        $client = Factory::factoryForModel(Client::class)->create();
+
+        // Call the getWithPaginate method of the repository and get the result
+        $result = $repository->getWithPaginate(1, 15);
+
+        // Assert that the returned client has the correct values
+        $this->assertEquals([$client->fresh()], $result->items());
+
+        // Assert that the returned client has the correct pagination
+        $this->assertEquals(1, $result->currentPage());
+        $this->assertEquals(15, $result->perPage());
     }
 
     /**
      * Test the store method of the ClientRepository class.
+     * @throws \JsonException
      */
     public function test_store(): void
     {

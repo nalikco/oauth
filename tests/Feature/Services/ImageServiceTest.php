@@ -26,9 +26,9 @@ class ImageServiceTest extends TestCase
         $path = $imageService->store('clients', 1, $uploadedFile);
 
         // Assert that the file exists in the storage
-        Storage::assertExists($path);
+        Storage::assertExists("public/$path");
 
         // Delete the file from the storage
-        Storage::delete($path);
+        Storage::delete("public/$path");
     }
 }

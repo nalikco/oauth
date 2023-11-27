@@ -27,4 +27,22 @@ class TokenRepository
             ->get()
             ->groupBy('client_id');
     }
+
+    /**
+     * Retrieves the active tokens for a given client ID.
+     *
+     * @param int $clientId The ID of the client.
+     * @return Collection The collection of active tokens.
+     */
+    public function getActiveByClientId(int $clientId): Collection
+    {
+        return Passport::token()
+            ->newQuery()
+            ->where('client_id', $clientId)
+            ->where('revoked', false)
+            ->whereDate('expires_at', '>', now()->toISOString())
+            ->latest('created_at')
+            ->with('user')
+            ->get();
+    }
 }

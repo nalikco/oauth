@@ -19,7 +19,7 @@ class ImageService
     public function store(string $path, string|int $id, UploadedFile $image): string
     {
         $fileName = $id.'-'.$image->getClientOriginalName();
-        $image->storePubliclyAs($path, $fileName);
+        $image->storePubliclyAs('public/' . $path, $fileName);
 
         return $path.'/'.$fileName;
     }

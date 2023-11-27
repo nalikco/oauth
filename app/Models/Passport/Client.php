@@ -12,6 +12,19 @@ use Laravel\Passport\Client as PassportClient;
 class Client extends PassportClient
 {
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name_translated',
+        'brand',
+        'description',
+        'link',
+        'image',
+    ];
+
+    /**
      * The attributes that should be cast to native types.
      *
      * @var array

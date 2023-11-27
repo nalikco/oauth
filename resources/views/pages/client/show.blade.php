@@ -1,5 +1,4 @@
 @extends('layout.layout')
-
 @section('content')
     <x-ui.page.container>
         <x-ui.page.content-header :back-url="route('clients.index')"
@@ -43,9 +42,15 @@
                 </h1>
             </div>
             <div class="space-y-2">
-                <x-ui.page.block>
-                    Igor Karplyuk
-                </x-ui.page.block>
+                @forelse($authorized as $token)
+                    <x-ui.page.block>
+                        @lang('clients.show.user_authorized_application', ['name' => $token->user->name, 'date' => $token->created_at->format('d M Y'), 'boldClass' => 'font-medium'])
+                    </x-ui.page.block>
+                @empty
+                    <x-ui.text.disabled-text>
+                        @lang('clients.show.empty_authorized')
+                    </x-ui.text.disabled-text>
+                @endforelse
             </div>
         </section>
     </x-ui.page.container>

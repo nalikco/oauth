@@ -14,9 +14,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('oauth_clients', function (Blueprint $table) {
-            $table->json('name_translated')->after('name')->nullable();
-            $table->json('brand')->after('name_translated')->nullable();
-            $table->json('description')->after('brand')->nullable();
+            $table->jsonb('name_translated')->after('name')->nullable();
+            $table->jsonb('brand')->after('name_translated')->nullable();
+            $table->jsonb('description')->after('brand')->nullable();
             $table->string('link')->after('description')->nullable();
             $table->string('image')->after('link')->nullable();
         });

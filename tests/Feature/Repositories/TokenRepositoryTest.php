@@ -96,4 +96,58 @@ class TokenRepositoryTest extends TestCase
         // Assert the count of tokens for the last client
         $this->assertEquals(1, $result->last()->count());
     }
+
+    /**
+     * Test the "getActiveByClientId" method.
+     */
+    public function test_get_active_by_client_id(): void
+    {
+        // Create the token repository instance
+        $repository = $this->app->make(TokenRepository::class);
+
+        // Create a user
+        $user = User::factory()->create();
+
+        // Create two client instances
+        $clientOne = Factory::factoryForModel(Client::class)->create();
+        $clientTwo = Factory::factoryForModel(Client::class)->create();
+
+        // Create four tokens for clientOne
+        $clientOne->tokens()->create([
+            'id' => Str::random(100),
+            'user_id' => $user->id,
+            'name' => 'Client 1 Token 1',
+            'revoked' => false,
+            'expires_at' => now()->addDay(),
+        ])->refresh();
+        $clientOne->tokens()->create([
+            'id' => Str::random(100),
+            'user_id' => $user->id,
+            'name' => 'Client 1 Token 3 (revoked)',
+            'revoked' => true,
+            'expires_at' => now()->addDay(),
+        ]);
+        $clientOne->tokens()->create([
+            'id' => Str::random(100),
+            'user_id' => $user->id,
+            'name' => 'Client 1 Token 4 (expired)',
+            'revoked' => true,
+            'expires_at' => now()->addDay(),
+        ]);
+
+        // Create a token for clientTwo
+        $clientTwo->tokens()->create([
+            'id' => Str::random(100),
+            'user_id' => $user->id,
+            'name' => 'Client 2 Token',
+            'revoked' => false,
+            'expires_at' => now()->addDay(),
+        ]);
+
+        // Call the getActiveByClientId method
+        $result = $repository->getActiveByClientId($clientOne->id);
+
+        // Assert the expected result count
+        $this->assertEquals(1, $result->count());
+    }
 }

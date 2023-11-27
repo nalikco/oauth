@@ -20,6 +20,8 @@
                     @lang('clients.no_clients')
                 </x-ui.text.disabled-text>
             @endforelse
+
+            {{ $clients->render() }}
         </section>
     </x-ui.page.container>
 @endsection

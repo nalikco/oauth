@@ -7,7 +7,7 @@
             @forelse($clients as $client)
                 <x-app.client-box :brand="$client->first()->client->brand[app()->getLocale()]"
                                   :image-url="$client->first()->client->image"
-                                  :url="$client->link"
+                                  :url="$client->first()->client->link"
                                   :name="$client->first()->client->name_translated[app()->getLocale()]"
                                   :description="$client->first()->client->description[app()->getLocale()]"
                                   :delete-url="'#'"

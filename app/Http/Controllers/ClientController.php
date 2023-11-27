@@ -8,16 +8,18 @@ use App\Dto\Client\Factories\CreateCreateDtoFactory;
 use App\Http\Requests\Client\StoreRequest;
 use App\Models\Passport\Client;
 use App\Repositories\ClientRepository;
+use App\Repositories\TokenRepository;
 use App\Services\Client\ClientService;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class ClientController extends Controller
 {
     public function __construct(
         private readonly ClientService              $service,
         private readonly ClientRepository           $repository,
+        private readonly TokenRepository            $tokenRepository,
         private readonly GetAuthenticatedUserAction $getAuthenticatedUserAction,
     )
     {
@@ -41,7 +43,7 @@ class ClientController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
         return view('pages.client.create');
     }
@@ -68,6 +70,7 @@ class ClientController extends Controller
     {
         return view('pages.client.show', [
             'client' => $client,
+            'authorized' => $this->tokenRepository->getActiveByClientId($client->id),
         ]);
     }
 

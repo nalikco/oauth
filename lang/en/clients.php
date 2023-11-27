@@ -2,7 +2,7 @@
 return [
     'clients' => 'Clients',
     'no_clients' => 'No created clients.',
-    'created' => 'Created',
+    'created' => 'created',
     'edit_link' => 'Edit',
     'show' => [
         'brand' => 'Brand',
@@ -10,6 +10,8 @@ return [
         'description' => 'Description',
         'link' => 'Link',
         'redirect_urls' => 'Redirect URLs',
+        'empty_authorized' => 'Nobody has used this application.',
+        'user_authorized_application' => '<span class=":boldClass">:name</span> authorized this application on <span class=":boldClass">:date</span>.',
     ],
     'create' => [
         'title' => 'Create client',
